@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "typeRoots": ["types", "node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"],
+      "others/*": ["../others/*"]
+    }
+  }
+}
