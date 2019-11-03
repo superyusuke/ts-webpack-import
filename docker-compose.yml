@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  node:
+    networks:
+      - db_net
+    build: ./node
+    volumes:
+      - ./node:/app
+    ports:
+      - "3333:3333"
+    environment:
+      SEQUELIZE_CONNECT: "sequelize-settings.yml"
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    ports:
+      - '4466:4466'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          note:
+            connector: mysql
+            host: mysql
+            port: 3306
+            user: root
+            password: password
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: "note"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+networks:
+  db_net:
+    driver: bridge
